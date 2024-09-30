@@ -2,10 +2,45 @@ import streamlit as st
 import pandas as pd
 from io import StringIO
 import requests
-import matplotlib.pyplot as plt
-import numpy as np
+from web3 import Web3
 
-# Load the dataset into a DataFrame
+# Connect to Conflux (you'll need to provide the correct endpoint)
+conflux = Web3(Web3.HTTPProvider('https://testnet.confluxrpc.org'))
+contract_address = '0xDA0bab807633f07f013f94DD0E6A4F96F8742B53'
+abi = [
+    {
+        "inputs": [
+            {"internalType": "string", "name": "_greeting", "type": "string"}
+        ],
+        "name": "setGreeting",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {"internalType": "string", "name": "_greeting", "type": "string"}
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "inputs": [],
+        "name": "greeting",
+        "outputs": [
+            {"internalType": "string", "name": "", "type": "string"}
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
+
+
+contract_address = '0xDA0bab807633f07f013f94DD0E6A4F96F8742B53'
+contract = conflux.eth.contract(address=contract_address, abi=abi)
+
+
+
 data = """s ID,Engine Temp (°C),Oil Pressure (psi),RPM (x1000),Fuel Consumption (L/100km),Battery Voltage (V),Battery Temp (°C),Brake Pad Thickness (mm),Brake Fluid Level (%),Tire Tread Depth (mm),Tire Pressure (psi),Tire Temp (°C),Shock Absorber Condition (%),Ride Height (mm),Transmission Fluid Level (%),Gear Shifts (Count),CO2 Emission (g/km),NOx Emission (ppm),Coolant Level (%),Radiator Condition (%),DTC Count,Electrical System Voltage (V),Last Maintenance Date
 Bus_1,90,40,2.5,12.5,13.0,30,8,90,7,32,35,85,140,95,150,120,50,95,90,3,14.0,2024-09-01
 Bus_2,85,38,2.7,13.0,12.8,28,9,85,6,30,33,80,142,90,160,115,55,90,88,2,13.8,2024-09-02
@@ -22,7 +57,8 @@ Bus_12,86,38,2.6,12.8,12.9,28,9,85,6.6,31,33,80,139,89,160,115,52,90,88,2,13.9,2
 Bus_13,91,42,2.9,13.8,13.2,31,7,86,7.3,29,34,82,137,88,153,125,50,91,89,4,14.1,2024-09-01
 Bus_14,89,39,2.4,12.1,13.1,29,6.8,88,6.4,32,31,78,140,92,148,118,55,93,87,1,14.0,2024-09-02
 Bus_15,92,41,2.7,13.7,13.3,30,8.5,89,7.0,30,35,83,142,94,152,122,53,96,91,3,14.2,2024-09-03
-Bus_16,87,40,2.8,13.0,12.7,27,7.2,87,6.9,33,35,81,139,92,149,116,56,90,89,2,13.8,2024-09-01"""
+Bus_16,87,40,2.8,13.0,12.7,27,7.2,87,6.9,33,35,81,139,92,149,116,56,90,89,2,13.8,2024-09-01
+"""
 
 df = pd.read_csv(StringIO(data))
 
@@ -42,10 +78,10 @@ st.sidebar.subheader("Selected Bus Data")
 st.sidebar.write(selected_bus)
 
 # Extract parameters from the selected bus
-mileage = selected_bus['RPM (x1000)'] * 1000  # Simulated mileage based on RPM
-fuel_consumption = selected_bus['Fuel Consumption (L/100km)'] * 0.264172  # Convert L/100km to gallons
-engine_hours = (mileage / 15)  # Assume average speed of 15 mph for engine hours
-bus_weight = 15  # Example fixed weight
+mileage = selected_bus['RPM (x1000)'] * 1000
+fuel_consumption = selected_bus['Fuel Consumption (L/100km)'] * 0.264172
+engine_hours = (mileage / 15)
+bus_weight = 15
 passengers = st.sidebar.number_input("Number of Passengers", min_value=1, max_value=100, value=50)
 oil_level = st.sidebar.slider("Engine Oil Level (%)", min_value=0, max_value=100, value=75)
 tire_pressure = selected_bus['Tire Pressure (psi)']
@@ -79,37 +115,37 @@ def get_maintenance_prediction(bus_data):
     else:
         return None
 
+# Function to send data to Conflux
+def send_to_conflux(data):
+    # Build the transaction to call a contract method
+    tx = contract.functions.updateData(data).buildTransaction({
+        'gas': 2000000,
+        'gasPrice': conflux.toWei('10', 'gwei'),
+        'nonce': conflux.eth.getTransactionCount('0x6e2209bcfcff76641ee7de9efa030d68e9fae297'),
+    })
+    
+    # Sign and send the transaction
+    signed_txn = conflux.eth.account.signTransaction(tx, private_key='c5772320cb932e554c749638679823c811df321e6169c23d14d7dcda13e151d8')
+    tx_hash = conflux.eth.sendRawTransaction(signed_txn.rawTransaction)
+    
+    return tx_hash.hex()
+
+
 # Button to make the prediction
 if st.sidebar.button("Predict Maintenance"):
     if bus_data['oil_level'] > 80:
-        st.warning("⚠️ Maintenance is required due to high engine oil level.")
+        st.warning("⚠ Maintenance is required due to high engine oil level.")
     else:
         maintenance_miles = get_maintenance_prediction(bus_data)
         
         if maintenance_miles:
-            st.success(f"🛠️ Maintenance is needed in **{maintenance_miles} miles**.")
-            # Prepare data for plotting
-            mileage_samples = np.linspace(0, 50000, 100)
-            maintenance_predictions = maintenance_miles * (mileage_samples / mileage)  # Example prediction scaling
-
-            # Plotting the graph
-            plt.figure(figsize=(10, 5))
-            plt.plot(mileage_samples, maintenance_predictions, label='Predicted Maintenance Miles', color='blue')
-            plt.axvline(x=mileage, color='red', linestyle='--', label='Current Mileage')
-            plt.title('Predicted Maintenance Needs Based on Mileage')
-            plt.xlabel('Mileage (miles)')
-            plt.ylabel('Maintenance Miles Needed')
-            plt.legend()
-            plt.grid()
-            plt.xticks(np.arange(0, 51000, 5000))
-            plt.yticks(np.arange(0, max(maintenance_predictions) + 100, 1000))
-
-            # Display the plot in Streamlit
-            st.pyplot(plt)
+            st.success(f"🛠 Maintenance is needed in *{maintenance_miles} miles*.")
+            # Send data to Conflux
+            tx_hash = send_to_conflux(bus_data)
+            st.write(f"Data sent to Conflux, transaction hash: {tx_hash}")
         else:
-            st.error("❌ Maintenance prediction failed.")
+            st.error("❌ Maintenance not required.")
 
-# Displaying the inputted data
 # Displaying the inputted data
 st.subheader("Bus Data Summary")
 st.write(f"Mileage: {mileage} miles")
