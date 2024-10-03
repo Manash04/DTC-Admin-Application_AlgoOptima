@@ -110,10 +110,19 @@ The frontend for the web application, built using **Next.js** with **Prisma** as
 3. **ML Models**: Deployed models dynamically adjust schedules and predict maintenance needs.
 4. **Geocoding**: Generates the geographical coordinates of bus stops for routing.
 
+## **Here are some references that could support these points:**
+
+DTCWebsite : https://dtc-project.vercel.app/login (Email : admin , Password: 123456789)
+➢ GitHub: https://shorturl.at/sJeFy
+➢ Video: https://youtu.be/IqWJWaObHxc?si=CNIyX5SvrI_5a0pS
+➢ Research Paper: https://shorturl.at/uAYgk
+➢ Model 1: https://shorturl.at/qzm3d (Dataset for model1 : https://shorturl.at/z4KtA)
+➢ Model 2: https://crewwww-abxytwumtpr9dmpgge8ofn.streamlit.app/
+➢ Model 3: https://shorturl.at/g0TP
+
 ## **License**
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ---
 
-I’ve cleaned up the structure and made sections more clear. Let me know if you'd like to further tweak any section or add specific details!
