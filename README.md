@@ -112,13 +112,22 @@ The frontend for the web application, built using **Next.js** with **Prisma** as
 
 ## **Here are some references that could support these points:**
 
-DTCWebsite : https://dtc-project.vercel.app/login (Email : admin , Password: 123456789)
-➢ GitHub: https://shorturl.at/sJeFy
-➢ Video: https://youtu.be/IqWJWaObHxc?si=CNIyX5SvrI_5a0pS
-➢ Research Paper: https://shorturl.at/uAYgk
-➢ Model 1: https://shorturl.at/qzm3d (Dataset for model1 : https://shorturl.at/z4KtA)
-➢ Model 2: https://crewwww-abxytwumtpr9dmpgge8ofn.streamlit.app/
-➢ Model 3: https://shorturl.at/g0TP
+- **DTC Website**: [https://dtc-project.vercel.app/login](https://dtc-project.vercel.app/login)  
+  *Email*: admin | *Password*: 123456789 or Login as Admin
+
+- **GitHub**: [https://shorturl.at/sJeFy](https://shorturl.at/sJeFy)
+
+- **Video**: [https://youtu.be/IqWJWaObHxc?si=CNIyX5SvrI_5a0pS](https://youtu.be/IqWJWaObHxc?si=CNIyX5SvrI_5a0pS)
+
+- **Research Paper**: [https://shorturl.at/uAYgk](https://shorturl.at/uAYgk)
+
+- **Model 1**: [https://shorturl.at/qzm3d](https://shorturl.at/qzm3d)  
+  *Dataset for Model 1*: [https://shorturl.at/z4KtA](https://shorturl.at/z4KtA)
+
+- **Model 2**: [https://crewwww-abxytwumtpr9dmpgge8ofn.streamlit.app/](https://crewwww-abxytwumtpr9dmpgge8ofn.streamlit.app/)
+
+- **Model 3**: [https://shorturl.at/g0TP](https://shorturl.at/g0TP)
+
 
 ## **License**
 
