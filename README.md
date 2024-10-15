@@ -1,5 +1,5 @@
 # **Smart Urban Transit Management - Smart Dynamic Bus Scheduling System**
-
+DTC Website: https://dtc-project.vercel.app
 This repository hosts the source code for **Smart Urban Transit Management**, a project developed for the Smart India Hackathon 2024. The solution integrates AI, machine learning, and blockchain technologies to optimize public transportation in Delhi. TransitAI aims to enhance the efficiency of bus scheduling, predictive vehicle maintenance, and crew management using modern tech innovations like blockchain for payment and real-time dynamic scheduling.
 
 ## **Repository Structure**
