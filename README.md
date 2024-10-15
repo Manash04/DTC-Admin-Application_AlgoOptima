@@ -112,7 +112,7 @@ The frontend for the web application, built using **Next.js** with **Prisma** as
 
 ## **Here are some references that could support these points:**
 
-- **DTC Website**: [https://dtc-project.vercel.app/login](https://dtc-project.vercel.app/login)  
+- **DTC Website**: [https://dtc-project.vercel.app/login](https://dtc-project.vercel.app)  
   *Email*: admin | *Password*: 123456789 or Login as Admin
 
 - **GitHub**: [https://shorturl.at/sJeFy](https://shorturl.at/sJeFy)
