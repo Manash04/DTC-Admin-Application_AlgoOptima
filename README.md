@@ -109,7 +109,7 @@ The frontend for the web application, built using **Next.js** with **Prisma** as
 1. **API**: FastAPI server handles all backend logic.
 2. **Web Application**: Users interact via a Next.js interface, with real-time data visualizations.
 3. **ML Models**: Deployed models dynamically adjust schedules and predict maintenance needs.
-4. **Geocoding**: Generates the geographical coordinates of bus stops for routing.
+4. **Geocoding**: Generates the geographical coordinates of bus stops  routing.
 
 ## **Here are some references that could support these points:**
 
