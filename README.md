@@ -127,7 +127,6 @@ The frontend for the web application, built using **Next.js** with **Prisma** as
 
 - **Model 2**: [https://crewwww-abxytwumtpr9dmpgge8ofn.streamlit.app/](https://crewwww-abxytwumtpr9dmpgge8ofn.streamlit.app/)
 
-- **Model 3**: [https://shorturl.at/g0TP](https://ai-powered-vehicle-predictive-maintainance-algooptima.streamlit.app/)
 
 
 ## **License**
